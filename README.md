@@ -12,10 +12,13 @@ sudo dnf install ansible
 
 ### Playbook
 ```bash
-temp
+mkdir -p ~/Projects
+cd ~/Projects
+git clone git@github.com:Lackshan/desktop-ansible-playbook.git
 ```
 
 ## Running the playbook
 ```bash
-PLACEHOLDER
+cd ~/Projects/desktop-ansible-playbook
+ansible-playbook post_install.yml
 ```

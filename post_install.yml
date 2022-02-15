@@ -3,6 +3,7 @@
 # Helpful Sites:
 # https://chmod-calculator.com/
 # https://security.stackexchange.com/questions/129474/how-to-raise-a-key-to-ultimate-trust-on-another-machine
+# https://github.com/netson/ansible-gpg-key
 
 - hosts: localhost
   tasks:
@@ -13,6 +14,11 @@
     - name: Enable RPMFusion Non-free
       become: yes
       command: dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Flatpak Setup
+    - name: Enable Flathub repository
+      become: yes
+      command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # Install GNOME Quality-of-Life packages
     - name: Install GNOME Tweaks
@@ -35,29 +41,30 @@
 # Essential Apps
     # Install Mullvad
     # Download and trust Mullvad GPG key
-    - name: Download Mullvad GPG Signing Key
-      get_url:
-        url: https://mullvad.net/media/mullvad-code-signing.asc
-        dest: "/tmp"
-        register: mullvad_signing_key
-    - shell: cat "hello"
-      register: cat_contents
-    - name: Import Mullvad GPG Signing Key
-      become: yes
-      command: gpg2 --import mullvad_signing_key.dest
-    - name: Set Mullvad GPG Signing Key trust level to ultimate
-      become: yes
-      command: gpg2 --import mullvad_signing_key.dest
-    # Check GPG Signature
-    - name: Download official Mullvad RPM file
-      get_url:
-        url: https://mullvad.net/download/app/rpm/latest
-        dest: "/tmp"
-        register: mullvad_rpm_file
-    - name: Install Mullvad rpm from a local file
-      dnf:
-        name: mullvad_rpm_file.dest
-        state: present
+    # - name: Download Mullvad GPG Signing Key
+    #   get_url:
+    #     url: https://mullvad.net/media/mullvad-code-signing.asc
+    #     dest: "/tmp"
+    #     register: mullvad_signing_key
+    # - name: Import Mullvad GPG Signing Key and set trust level to ultimate
+    #   gpg_key:
+    #     file: mullvad_signing_key.dest
+    #     trust: '5'
+    # # Download Mullvad RPM and check GPG signature
+    # - name: Download official Mullvad RPM file
+    #   get_url:
+    #     url: https://mullvad.net/download/app/rpm/latest
+    #     dest: "/tmp"
+    #     register: mullvad_rpm_file
+    
+    # - name: Install Mullvad rpm from a local file
+    #   dnf:
+    #     name: mullvad_rpm_file.dest
+    #     state: present
+
+    # Looks possible to use dnf to import the key to rpm and then directly install from the URL:
+    # https://www.redhat.com/sysadmin/rpm-gpg-verify-packages
+    # https://stackoverflow.com/questions/59170877/rpm-gpg-key-import-from-an-rpm-post-install-script
 
     # Install Tutanota
     - name: Create directory for Tutanota if it does not exist
@@ -86,7 +93,36 @@
       package:
         name: transmission
         state: present
-
+    
+    # VSCodium
+    - name: Import a key from a url
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+    - name: Add Paul Carroty's VSCodium Repo to DNF
+      become: yes
+      command: printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
+    - name: Install VSCodium
+      become: yes
+      package:
+        name: codium
+        state: present
+    
+    # Jitsi
+    
+    # Flatpaks:
+    # Signal
+    - name: Install Signal from Flathub 
+      become: yes
+      command: flatpak install flathub org.signal.Signal
+    # Freetube
+    - name: Install FreeTube from Flathub
+      become: yes
+      command: flatpak install flathub io.freetubeapp.FreeTube
+    # Spotify
+    - name: Install Spotify from Flathub
+      become: yes
+      command: flatpak install flathub com.spotify.Client
 
 # LaTeX
 # https://docs.fedoraproject.org/en-US/neurofedora/latex/

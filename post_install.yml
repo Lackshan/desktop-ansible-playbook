@@ -1,0 +1,136 @@
+# Ansible Playbook for Fedora 35 Desktop First Time Setup
+
+# Helpful Sites:
+# https://chmod-calculator.com/
+# https://security.stackexchange.com/questions/129474/how-to-raise-a-key-to-ultimate-trust-on-another-machine
+
+- hosts: localhost
+  tasks:
+# Enable Repositories
+    - name: Enable RPMFusion Free
+      become: yes
+      command: dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    - name: Enable RPMFusion Non-free
+      become: yes
+      command: dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Install GNOME Quality-of-Life packages
+    - name: Install GNOME Tweaks
+      become: yes
+      package:
+        name: gnome-tweak-tool
+        state: present
+    # Find out how to install dash to dock for F35
+    - name: Install GNOME Extensions app
+      become: yes
+      package:
+        name: gnome-extensions-app
+        state: present
+    - name: Install PulseAudio Volume Control
+      become: yes
+      package:
+        name: pavucontrol
+        state: present
+
+# Essential Apps
+    # Install Mullvad
+    # Download and trust Mullvad GPG key
+    - name: Download Mullvad GPG Signing Key
+      get_url:
+        url: https://mullvad.net/media/mullvad-code-signing.asc
+        dest: "/tmp"
+        register: mullvad_signing_key
+    - shell: cat "hello"
+      register: cat_contents
+    - name: Import Mullvad GPG Signing Key
+      become: yes
+      command: gpg2 --import mullvad_signing_key.dest
+    - name: Set Mullvad GPG Signing Key trust level to ultimate
+      become: yes
+      command: gpg2 --import mullvad_signing_key.dest
+    # Check GPG Signature
+    - name: Download official Mullvad RPM file
+      get_url:
+        url: https://mullvad.net/download/app/rpm/latest
+        dest: "/tmp"
+        register: mullvad_rpm_file
+    - name: Install Mullvad rpm from a local file
+      dnf:
+        name: mullvad_rpm_file.dest
+        state: present
+
+    # Install Tutanota
+    - name: Create directory for Tutanota if it does not exist
+      ansible.builtin.file:
+        path: /opt/tutanota
+        state: directory
+        mode: '0755'
+    - name: Download official Tutanota AppImage
+      get_url:
+        url: https://mail.tutanota.com/desktop/tutanota-desktop-linux.AppImage
+        dest: /opt/tutanota/tutanota-desktop-linux.AppImage
+        mode: '0755'
+
+    - name: Install VLC
+      become: yes
+      package:
+        name: vlc
+        state: present
+    - name: Install KeePassXC
+      become: yes
+      package:
+        name: keepassxc
+        state: present
+    - name: Install Transmission
+      become: yes
+      package:
+        name: transmission
+        state: present
+
+
+# LaTeX
+# https://docs.fedoraproject.org/en-US/neurofedora/latex/
+    - name: Output LaTeX Install Start
+      ansible.builtin.debug:
+        msg:
+        - "Beginning installation of LaTeX packages"
+    - name: Install TeXLive Medium Scheme
+      become: yes
+      package:
+        name: texlive-scheme-medium
+        state: present
+    - name: Install Latexmk
+      become: yes
+      package:
+        name: latexmk
+        state: present
+    - name: Install chkTeX
+      become: yes
+      package:
+        name: texlive-chktex
+        state: present
+    - name: Install IEEE style for BibLaTeX
+      become: yes
+      package:
+        name: texlive-biblatex-ieee
+        state: present
+    - name: Install amsfonts
+      become: yes
+      package:
+        name: texlive-amsfonts
+        state: present
+    - name: Install Appendix package
+      become: yes
+      package:
+        name: texlive-appendix
+        state: present
+    - name: Install Preprint package
+      become: yes
+      package:
+        name: texlive-preprint
+        state: present
+    # Find out how to install minted package
+    - name: Output LaTeX Install End
+      ansible.builtin.debug:
+        msg:
+        - "Completed installation of LaTeX packages"

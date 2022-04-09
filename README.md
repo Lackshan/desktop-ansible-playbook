@@ -8,6 +8,7 @@ As I'm new to Ansible, I'm going to be installing the libraries into the ```libr
 ### Ansible
 ```bash
 sudo dnf install ansible
+wget https://github.com/Lackshan/desktop-ansible-playbook/archive/refs/heads/master.zip
 ```
 
 ### Playbook
@@ -20,5 +21,5 @@ git clone git@github.com:Lackshan/desktop-ansible-playbook.git
 ## Running the playbook
 ```bash
 cd ~/Projects/desktop-ansible-playbook
-ansible-playbook post_install.yml
+ansible-playbook post_install.yml --ask-become-pass
 ```

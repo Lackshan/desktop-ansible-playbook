@@ -50,6 +50,13 @@
         name: pavucontrol
         state: present
 
+# SSH Config
+# Setup config to improve security as per blog post
+# Set it so that connections are kept alive forever
+
+# Kitty (Terminal Emulator)
+
+
 # Essential Apps
     - name: Install nano
       become: yes
@@ -86,6 +93,7 @@
 
     # Install Tutanota
     - name: Create directory for Tutanota if it does not exist
+      become: yes
       ansible.builtin.file:
         path: /opt/tutanota
         state: directory

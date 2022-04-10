@@ -1,0 +1,8 @@
+# This is meant to set up additional software for Framework laptops running Fedora 35
+
+# Power Management
+
+# Fractional Scaling
+# gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+
+# Audio Jack Mic-In

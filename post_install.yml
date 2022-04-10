@@ -258,15 +258,18 @@
         name: java-1.8.0-openjdk-devel.x86_64
         state: present
     - name: Add JAVA_HOME to /etc/profile
+      become: yes
       ansible.builtin.lineinfile:
         path: /etc/profile
         line: export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
         backup: yes
     - name: Add PATH to /etc/profile
+      become: yes
       ansible.builtin.lineinfile:
         path: /etc/profile
         line: export PATH=$PATH:$JAVA_HOME/bin
     - name: Add CLASSPATH to /etc/profile
+      become: yes
       ansible.builtin.lineinfile:
         path: /etc/profile
         line: export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar

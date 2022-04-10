@@ -4,5 +4,7 @@
 
 # Fractional Scaling
 # gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
+# Turn off with gsettings reset org.gnome.mutter experimental-features
+# This makes VSCodium look blurry
 
 # Audio Jack Mic-In

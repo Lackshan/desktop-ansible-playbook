@@ -273,9 +273,10 @@
       ansible.builtin.lineinfile:
         path: /etc/profile
         line: export CLASSPATH=.:$JAVA_HOME/jre/lib:$JAVA_HOME/lib:$JAVA_HOME/lib/tools.jar
-    - name: Reload /etc/profile
-      become: yes
-      command: source /etc/profile
+    # - name: Reload /etc/profile - This doesn't do anything, manual source is still required
+    #   shell: source /etc/profile
+    #   args:
+    #     executable: /bin/bash
     - name: Output Java OpenJDK Install End
       ansible.builtin.debug:
         msg:

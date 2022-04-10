@@ -23,6 +23,7 @@ git clone git@github.com:Lackshan/desktop-ansible-playbook.git
 ```bash
 cd ~/Projects/desktop-ansible-playbook
 ansible-playbook post_install.yml --ask-become-pass
+source /etc/profile
 ```
 
 ## Not included in this playbook

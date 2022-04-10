@@ -176,6 +176,11 @@
       package:
         name: libreoffice
         state: present
+    - name: Install LibreOffice
+      become: yes
+      package:
+        name: fira-code-fonts
+        state: present
     
     # VSCodium
     - name: Import a key from a url

@@ -81,6 +81,13 @@
         path: /home/lackshan/.ssh
         state: directory
         mode: '0700'
+    - name: Edit etc/ssh/moduli for diffie-hellman-group-exchange-sha256 1 of 3
+      command: awk '$5 > 2000' /etc/ssh/moduli > "${HOME}/moduli"
+    - name: Edit etc/ssh/moduli for diffie-hellman-group-exchange-sha256 2 of 3
+      command: wc -l "${HOME}/moduli"
+    - name: Edit etc/ssh/moduli for diffie-hellman-group-exchange-sha256 3 of 3
+      become: yes
+      command: mv "${HOME}/moduli" /etc/ssh/moduli
 # Set it so that connections are kept alive forever
 
 # Kitty (Terminal Emulator)

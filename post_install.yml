@@ -156,17 +156,20 @@
     
     # Flatpaks:
     # Signal
-    - name: Install Signal from Flathub 
-      become: yes
-      command: flatpak install flathub org.signal.Signal
+    - name: Install Signal flatpak
+      community.general.flatpak:
+        name: org.signal.Signal
+        state: present
     # Freetube
-    - name: Install FreeTube from Flathub
-      become: yes
-      command: flatpak install flathub io.freetubeapp.FreeTube
+    - name: Install FreeTube flatpak
+      community.general.flatpak:
+        name: io.freetubeapp.FreeTube
+        state: present
     # Spotify
-    - name: Install Spotify from Flathub
-      become: yes
-      command: flatpak install flathub com.spotify.Client
+    - name: Install Spotify flatpak
+      community.general.flatpak:
+        name: com.spotify.Client
+        state: present
 
 # LaTeX
 # https://docs.fedoraproject.org/en-US/neurofedora/latex/

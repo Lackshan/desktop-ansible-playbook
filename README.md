@@ -8,6 +8,7 @@ As I'm new to Ansible, I'm going to be installing the libraries into the ```libr
 ### Ansible
 ```bash
 sudo dnf install ansible
+ansible-galaxy collection install community.general
 wget https://github.com/Lackshan/desktop-ansible-playbook/archive/refs/heads/master.zip
 ```
 

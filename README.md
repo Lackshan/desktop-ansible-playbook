@@ -24,3 +24,6 @@ git clone git@github.com:Lackshan/desktop-ansible-playbook.git
 cd ~/Projects/desktop-ansible-playbook
 ansible-playbook post_install.yml --ask-become-pass
 ```
+
+## Not included in this playbook
+1. Actual creation of SSH Keys

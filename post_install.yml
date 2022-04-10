@@ -19,13 +19,13 @@
     - name: Set User Email
       command: git config --global user.email "git@lackshan.dev"
 
-# Enable Repositories
-    - name: Enable RPMFusion Free
-      become: yes
-      command: dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-    - name: Enable RPMFusion Non-free
-      become: yes
-      command: dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+# Enable Repositories - This is broken
+    # - name: Enable RPMFusion Free
+      # become: yes
+      # command: dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    # - name: Enable RPMFusion Non-free
+      # become: yes
+      # command: dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Flatpak Setup
     - name: Enable Flathub repository
@@ -50,8 +50,9 @@
         name: pavucontrol
         state: present
 
-# SSH Config
+# SSH
     - name: Create SSH config file for crypto properties
+      become: yes
       copy:
         dest: /etc/ssh/ssh_config.d/ssh_crypto_properties.conf
         content: |
@@ -75,6 +76,11 @@
               Ciphers chacha20-poly1305@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr,aes256-cbc,aes192-cbc,aes128-cbc
               MACs hmac-sha2-256,hmac-sha2-512,hmac-sha1
               UseRoaming no
+    - name: Create .ssh directory if it does not exist
+      ansible.builtin.file:
+        path: /home/lackshan/.ssh
+        state: directory
+        mode: '0700'
 # Set it so that connections are kept alive forever
 
 # Kitty (Terminal Emulator)

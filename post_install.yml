@@ -91,7 +91,57 @@
 # Set it so that connections are kept alive forever
 
 # Kitty (Terminal Emulator)
+    - name: Install Kitty
+      become: yes
+      package:
+        name: kitty
+        state: present
+    - name: Install Zsh
+      become: yes
+      package:
+        name: zsh
+        state: present
+# sudo usermod -s $(which zsh) $USERNAME
+# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh-plugins/powerlevel10k
+# echo 'source ~/.zsh-plugins/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+# Copy in ~/.p10k.zsh and ~/.zshrc
+# If not in git already, edit typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique to truncate_to_last
+# May have to edit zshrc with p10k stuff
+# Install neovim and alias in zsh
 
+# Tmux
+    - name: Install Tmux
+      become: yes
+      package:
+        name: tmux
+        state: present
+# Config
+# git clone https://github.com/samoshkin/tmux-config.git
+# ./tmux-config/install.sh
+
+# Fonts
+    - name: Install fontawesome fonts
+      become: yes
+      package:
+        name: fontawesome-fonts
+        state: present
+    - name: Install Fira Code Fonts
+      become: yes
+      package:
+        name: fira-code-fonts
+        state: present
+    - name: Install Jetbrains Mono Fonts
+      become: yes
+      package:
+        name: jetbrains-mono-fonts-all
+        state: present
+# Nerd Fonts Fira Code
+# git clone --depth=1 https://github.com/ryanoasis/nerd-fonts
+# clone into a temp directory and delete after
+# cd into nerd fonts
+# ./install.sh FiraCode
+# ./install.sh FiraMono
+# ./install.sh NerdFontsSymbolsOnly
 
 # Essential Apps
     - name: Install nano
@@ -146,6 +196,11 @@
       package:
         name: vlc
         state: present
+    - name: Install Lollypop
+      become: yes
+      package:
+        name: lollypop
+        state: present
     - name: Install KeePassXC
       become: yes
       package:
@@ -175,11 +230,6 @@
       become: yes
       package:
         name: libreoffice
-        state: present
-    - name: Install LibreOffice
-      become: yes
-      package:
-        name: fira-code-fonts
         state: present
     
     # VSCodium
@@ -298,3 +348,38 @@
       ansible.builtin.debug:
         msg:
         - "Completed installation of Java OpenJDK"
+
+# Terraform
+# sudo dnf config-manager --add-repo https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+# sudo dnf install terraform
+# terraform -install-autocomplete
+
+# Linode CLI
+# sudo dnf install python3 && sudo dnf install python3-pip
+# sudo pip3 install linode-cli
+
+# Etesync
+# Install Evolution: sudo dnf install evolution
+# Install evolution etesync module
+
+# KVM Virtualisation
+# sudo dnf group install --with-optional virtualization
+# sudo systemctl start libvirtd
+# sudo systemctl enable libvirtd
+    - name: Install the 'Virtualization' package group
+      dnf:
+        name: '@virtualization'
+        state: present
+
+
+# Neovim
+    - name: Install Neovim
+      become: yes
+      package:
+        name: neovim
+        state: present
+    - name: Install Neovim Python Client
+      become: yes
+      package:
+        name: python3-neovim
+        state: present

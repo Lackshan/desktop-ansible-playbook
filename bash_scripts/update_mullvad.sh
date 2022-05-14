@@ -9,14 +9,14 @@
 
 # Download Mullvad RPM file from offical website
 sudo -u lackshan wget -P /tmp --content-disposition https://mullvad.net/download/app/rpm/latest
-rpm_filename=$(find /tmp -maxdepth 1 -name 'MullvadVPN-*_x86_64.rpm')
+rpm_filename=$(sudo -u lackshan find /tmp -maxdepth 1 -name 'MullvadVPN-*_x86_64.rpm')
 
 # Download Mullvad RPM file GPG signature from offical website
 sudo -u lackshan wget -P /tmp --trust-server-names https://mullvad.net/download/app/rpm/latest/signature
-sig_filename=$(find /tmp -maxdepth 1 -name 'MullvadVPN-*_x86_64.rpm.asc')
+sig_filename=$(sudo -u lackshan find /tmp -maxdepth 1 -name 'MullvadVPN-*_x86_64.rpm.asc')
 
 # Verify signature
-gpg --verify $sig_filename
+sudo -u lackshan gpg --verify $sig_filename
 
 # https://mullvad.net/en/help/verifying-signatures/
 # Check that the output starts with

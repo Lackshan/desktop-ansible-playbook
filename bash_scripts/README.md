@@ -9,3 +9,11 @@ Run it with:
 ```bash
 sudo ~/Projects/desktop-ansible-playbook/bash_scripts/update_tutanota.sh
 ```
+
+### update_mullvad.sh
+Mullvad provides an RPM file which has to be installed and updated manually. This script downloads the latest RPM file to /tmp, checks it's GPG signature and then installs it (if the signature checks out).
+
+Run it with:
+```bash
+~/Projects/desktop-ansible-playbook/bash_scripts/update_mullvad.sh
+```

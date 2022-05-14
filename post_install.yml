@@ -400,3 +400,7 @@
       file:
         dest: ~/Projects/desktop-ansible-playbook/bash_scripts/update_tutanota.sh
         mode: +x
+    - name: Change permission on update_mullvad.sh file to make it executable
+      file:
+        dest: ~/Projects/desktop-ansible-playbook/bash_scripts/update_mullvad.sh
+        mode: +x

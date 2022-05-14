@@ -383,3 +383,20 @@
       package:
         name: python3-neovim
         state: present
+
+# Etesync
+# dnf copr enable daftaupe/etesync-rs
+# dnf install evolution-etesync
+
+# Galaxy Buds Plus Client
+# Download github release
+# sudo mkdir /opt/GalaxyBudsClient
+# sudo mv ~/Downloads/GalaxyBudsClient_Linux_64bit_Portable.bin /opt/GalaxyBudsClient/GalaxyBudsClient_Linux_64bit_Portable.bin
+# chmod +x /opt/GalaxyBudsClient/GalaxyBudsClient_Linux_64bit_Portable.bin
+# Create a desktop launcher?
+
+# Bash Scripts
+    - name: Change permission on update_tutanota.sh file to make it executable
+      file:
+        dest: ~/Projects/desktop-ansible-playbook/bash_scripts/update_tutanota.sh
+        mode: +x

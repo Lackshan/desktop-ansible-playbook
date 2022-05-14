@@ -1,5 +1,5 @@
 # Desktop Ansible Playbook
-This playbook is meant to automate the first time setup process for my PCs. It has been specifically written for Fedora.
+This playbook is meant to automate the first time setup process for my PCs. It has been specifically written for Fedora. Additionally, it has to be cloned into the exact directory specified below or it will break.
 
 ## Libraries
 As I'm new to Ansible, I'm going to be installing the libraries into the ```library``` directory and adding it to this repo. This may change in the future as I get better at Ansible.

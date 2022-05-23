@@ -404,3 +404,8 @@
       file:
         dest: ~/Projects/desktop-ansible-playbook/bash_scripts/update_mullvad.sh
         mode: +x
+
+# Rust
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# Press 1 and press enter
+# source $HOME/.cargo/env

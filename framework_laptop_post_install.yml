@@ -15,6 +15,12 @@
 # Add PCIE_ASPM_ON_BAT=powersupersave to /etc/tlp.conf
 # sudo tlp start
 
+# ACTUALLY WORKS:
+# Improve s2idle suspend battery life:
+# sudo grubby --update-kernel=ALL --args=nvme.noacpi=1
+# Allow s2idle/modern standby to work on Fedora 35:
+# sudo grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'
+
 # For battery thresholds with TLP: https://old.reddit.com/r/thinkpad/comments/og5anr/til_battery_charging_thresholds_best_practices/
 # START_CHARGE_THRESH_BAT0=75
 # STOP_CHARGE_THRESH_BAT0=80
@@ -28,3 +34,13 @@
 # This makes VSCodium look blurry
 
 # Audio Jack Mic-In
+
+
+# Tiger Lake iGPU Hardware Acceleration:
+# intel-media-driver is needed for Tiger Lake and newer
+# sudo dnf install intel-media-driver
+# sudo dnf install igt-gpu-tools
+
+# VAAPI for Fedora 35:
+# sudo dnf install libva-utils
+# sudo dnf install ffmpeg

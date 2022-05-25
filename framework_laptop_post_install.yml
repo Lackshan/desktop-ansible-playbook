@@ -5,6 +5,7 @@
 # sudo grubby --update-kernel=ALL --args=mem_sleep_default=deep
 # This makes closing the lid not put the device to sleep however suspend appears
 # to actually suspend to ram
+# Check sleep state with: cat /sys/power/mem_sleep
 # Powertop
 # sudo dnf install powertop
 # TLP
@@ -44,3 +45,8 @@
 # VAAPI for Fedora 35:
 # sudo dnf install libva-utils
 # sudo dnf install ffmpeg
+
+# If you have the Tempo audio codec Framework mainboard, you need to disable it to achieve PC10 residency:
+# sudo su
+# echo 9 | sudo tee /sys/kernel/debug/pmc_core/ltr_ignore
+# Unofortunately, this doesn't work on Fedora 35 with Secure Boot enabled. Not sure why

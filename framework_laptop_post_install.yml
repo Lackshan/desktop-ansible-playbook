@@ -25,11 +25,13 @@
 # sudo tlp start
 
 # Improve s2idle suspend battery life:
+# sudo grubby --update-kernel=ALL --args=nvme.noacpi=1
     - name: Set kernel flags to allow NVME SSDs to sleep properly
       become: yes
       command: grubby --update-kernel=ALL --args=nvme.noacpi=1
 
 # Allow s2idle/modern standby to work on Fedora 35:
+# sudo grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'
     - name: Set kernel flags to remove change that broke s2idle
       become: yes
       command: grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'

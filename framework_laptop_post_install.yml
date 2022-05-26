@@ -31,10 +31,12 @@
       command: grubby --update-kernel=ALL --args=nvme.noacpi=1
 
 # Allow s2idle/modern standby to work on Fedora 35:
+# THIS IS WRONG! as having "" breaks the file. FIX IT!
+# Can be undone with sudo grubby --update-kernel=ALL --remove-args='"acpi_osi=!Windows 2020"'
 # sudo grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'
-    - name: Set kernel flags to remove change that broke s2idle
-      become: yes
-      command: grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'
+    # - name: Set kernel flags to remove change that broke s2idle
+    #   become: yes
+    #   command: grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'
 
 # For battery thresholds with TLP: https://old.reddit.com/r/thinkpad/comments/og5anr/til_battery_charging_thresholds_best_practices/
 # START_CHARGE_THRESH_BAT0=75

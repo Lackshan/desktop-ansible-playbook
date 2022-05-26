@@ -190,6 +190,35 @@
         url: https://mail.tutanota.com/desktop/tutanota-desktop-linux.AppImage
         dest: /opt/tutanota/tutanota-desktop-linux.AppImage
         mode: '0755'
+    
+    # Jitsi
+    - name: Create directory for Jitsi if it does not exist
+      become: yes
+      ansible.builtin.file:
+        path: /opt/jitsi
+        state: directory
+        mode: '0755'
+    - name: Download official Jitsi AppImage
+      become: yes
+      get_url:
+        url: https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage
+        dest: /opt/jitsi/jitsi-meet-x86_64.AppImage
+        mode: '0755'
+    
+    # Galaxy Buds Plus Client
+    # Create a desktop launcher?
+    - name: Create directory for GalaxyBudsClient if it does not exist
+      become: yes
+      ansible.builtin.file:
+        path: /opt/GalaxyBudsClient
+        state: directory
+        mode: '0755'
+    - name: Download official GalaxyBudsClient binary
+      become: yes
+      get_url:
+        url: https://github.com/ThePBone/GalaxyBudsClient/releases/latest/download/GalaxyBudsClient_Linux_64bit_Portable.bin
+        dest: /opt/GalaxyBudsClient/GalaxyBudsClient_Linux_64bit_Portable.bin
+        mode: '0755'
 
     - name: Install VLC
       become: yes
@@ -247,12 +276,6 @@
     #   package:
     #     name: codium
     #     state: present
-    
-    # Jitsi
-    # wget -P /tmp "https://github.com/jitsi/jitsi-meet-electron/releases/latest/download/jitsi-meet-x86_64.AppImage"
-    # sudo mkdir /opt/jitsi
-    # sudo mv /tmp/jitsi-meet-x86_64.AppImage /opt/jitsi/jitsi-meet-x86_64.AppImage
-    # chmod +x /opt/jitsi/jitsi-meet-x86_64.AppImage
 
     # Flatpaks:
     # Signal
@@ -391,13 +414,6 @@
 # Etesync
 # dnf copr enable daftaupe/etesync-rs
 # dnf install evolution-etesync
-
-# Galaxy Buds Plus Client
-# Download github release
-# sudo mkdir /opt/GalaxyBudsClient
-# sudo mv ~/Downloads/GalaxyBudsClient_Linux_64bit_Portable.bin /opt/GalaxyBudsClient/GalaxyBudsClient_Linux_64bit_Portable.bin
-# chmod +x /opt/GalaxyBudsClient/GalaxyBudsClient_Linux_64bit_Portable.bin
-# Create a desktop launcher?
 
 # Bash Scripts
     - name: Change permission on update_tutanota.sh file to make it executable

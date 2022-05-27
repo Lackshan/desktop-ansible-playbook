@@ -429,3 +429,19 @@
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Press 1 and press enter
 # source $HOME/.cargo/env
+
+# IntelliJ IDEA:
+# wget -P /tmp "https://download.jetbrains.com/idea/ideaIC-2022.1.1.tar.gz"
+# wget -P /tmp "https://download.jetbrains.com/idea/ideaIC-2022.1.1.tar.gz.sha256"
+
+# Compare sha256sum and only proceed if it matches:
+# cd /tmp
+# sha256sum -c /tmp/ideaIC-2022.1.1.tar.gz.sha256
+# Output must be 'ideaIC-2022.1.1.tar.gz: OK'
+
+# Move to opt
+# sudo tar -xzf /tmp/ideaIC-2022.1.1.tar.gz -C /opt
+
+# Make file executable
+# sudo chmod +x /opt/idea-IC-221.5591.52/bin/idea.sh
+

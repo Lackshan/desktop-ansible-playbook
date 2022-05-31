@@ -103,10 +103,7 @@
         state: present
 # sudo usermod -s $(which zsh) $USERNAME
 # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh-plugins/powerlevel10k
-# echo 'source ~/.zsh-plugins/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 # Copy in ~/.p10k.zsh and ~/.zshrc
-# If not in git already, edit typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique to truncate_to_last
-# May have to edit zshrc with p10k stuff
 # Install neovim and alias in zsh
 
 # Tmux
@@ -115,9 +112,14 @@
       package:
         name: tmux
         state: present
-# Config
+
+# Config:
+# Tmux:
 # git clone https://github.com/samoshkin/tmux-config.git
 # ./tmux-config/install.sh
+
+# Kitty:
+# Run dl_dotfiles.sh
 
 # Fonts
     - name: Install fontawesome fonts
@@ -445,3 +447,24 @@
 # Make file executable
 # sudo chmod +x /opt/idea-IC-221.5591.52/bin/idea.sh
 
+
+# CLion:
+# wget -P /tmp "https://download.jetbrains.com/cpp/CLion-2022.1.1.tar.gz"
+# wget -P /tmp "https://download.jetbrains.com/cpp/CLion-2022.1.1.tar.gz.sha256"
+
+# Compare sha256sum and only proceed if it matches:
+# cd /tmp
+# sha256sum -c /tmp/CLion-2022.1.1.tar.gz.sha256
+# Output must be 'CLion-2022.1.1.tar.gz: OK'
+
+# Move to opt
+# sudo tar -xzf /tmp/CLion-2022.1.1.tar.gz -C /opt
+
+# Make file executable
+# sudo chmod +x /opt/clion-2022.1.1/bin/clion.sh
+
+# PHP:
+# sudo dnf install php-cli
+
+
+# sudo dnf install htop

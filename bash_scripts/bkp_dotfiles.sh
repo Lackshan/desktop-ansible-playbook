@@ -16,4 +16,7 @@ mkdir ~/Projects/dotfiles/kitty
 cp ~/.config/kitty/kitty.conf ~/Projects/dotfiles/kitty/kitty.conf
 cp ~/.config/kitty/current-theme.conf ~/Projects/dotfiles/kitty/current-theme.conf
 
-
+# TLP:
+# Only do if TLP is installed!
+# mkdir ~/Projects/dotfiles/tlp
+# cp /etc/tlp.conf ~/Projects/dotfiles/tlp/tlp.conf

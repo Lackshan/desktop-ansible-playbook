@@ -19,9 +19,19 @@
       package:
         name: power-profiles-daemon
         state: absent
+
 # sudo systemctl enable tlp.service
+    - name: Enable TLP service
+      ansible.builtin.systemd:
+        name: tlp.service
+        enabled: yes
 # sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
+# Figure out how to automate above
 # sudo tlp start
+    - name: Manually start TLP
+      become: yes
+      command: tlp start
+
 
 # Improve s2idle suspend battery life:
 # sudo grubby --update-kernel=ALL --args=nvme.noacpi=1
@@ -48,7 +58,12 @@
 # Audio Jack Mic-In
 # Create file '/etc/modprobe.d/alsa-base.conf'
 # Add 'options snd-hda-intel model=dell-headset-multi' to it
-# Reboot
+    - name: Create ALSA config file to enable Mic-In via headphone jack
+      become: yes
+      copy:
+        dest: /etc/modprobe.d/alsa-base.conf
+        content: options snd-hda-intel model=dell-headset-multi
+# Reboot for changes to take effect!
 
 
 # Tiger Lake iGPU Hardware Acceleration:

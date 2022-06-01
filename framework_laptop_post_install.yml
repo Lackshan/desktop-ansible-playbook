@@ -17,11 +17,10 @@
     - name: Remove GNOME power-profiles-daemon
       become: yes
       package:
-        name: tlp
+        name: power-profiles-daemon
         state: absent
 # sudo systemctl enable tlp.service
 # sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
-# Add PCIE_ASPM_ON_BAT=powersupersave to /etc/tlp.conf
 # sudo tlp start
 
 # Improve s2idle suspend battery life:
@@ -39,10 +38,6 @@
     #   command: grubby --update-kernel=ALL --args='acpi_osi=!Windows 2020'
 
 # For battery thresholds with TLP: https://old.reddit.com/r/thinkpad/comments/og5anr/til_battery_charging_thresholds_best_practices/
-# START_CHARGE_THRESH_BAT0=75
-# STOP_CHARGE_THRESH_BAT0=80
-# Add the above to /etc/tlp.conf
-
 
 
 # Fractional Scaling
@@ -51,6 +46,9 @@
 # This makes VSCodium look blurry
 
 # Audio Jack Mic-In
+# Create file '/etc/modprobe.d/alsa-base.conf'
+# Add 'options snd-hda-intel model=dell-headset-multi' to it
+# Reboot
 
 
 # Tiger Lake iGPU Hardware Acceleration:

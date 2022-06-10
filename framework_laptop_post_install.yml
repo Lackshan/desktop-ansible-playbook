@@ -28,16 +28,18 @@
         enabled: yes
 # sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
 # Test that these actually work!!
-    # - name: Stop service systemd-rfkill.service and ensure it is masked
-    #   ansible.builtin.systemd:
-    #     name: systemd-rfkill.service
-    #     state: stopped
-    #     masked: yes
-    # - name: Stop service systemd-rfkill.socket and ensure it is masked
-    #   ansible.builtin.systemd:
-    #     name: systemd-rfkill.socket
-    #     state: stopped
-    #     masked: yes
+    - name: Stop service systemd-rfkill.service and ensure it is masked
+      ansible.builtin.systemd:
+        name: systemd-rfkill.service
+        enabled: no
+        state: stopped
+        masked: yes
+    - name: Stop service systemd-rfkill.socket and ensure it is masked
+      ansible.builtin.systemd:
+        name: systemd-rfkill.socket
+        enabled: no
+        state: stopped
+        masked: yes
 # sudo tlp start
     - name: Manually start TLP
       become: yes

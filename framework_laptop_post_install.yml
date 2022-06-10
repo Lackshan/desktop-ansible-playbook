@@ -44,6 +44,8 @@
       command: tlp start
 
 
+# WARNING: Do not use update kernel all with grubby for untested args!. update an older entry and test it first!!!
+# If it breaks, in grub press e to edit your boot entry and remove whatever you added.
 # Improve s2idle suspend battery life:
 # sudo grubby --update-kernel=ALL --args=nvme.noacpi=1
     - name: Set kernel flags to allow NVME SSDs to sleep properly
@@ -51,12 +53,14 @@
       command: grubby --update-kernel=ALL --args=nvme.noacpi=1
 
 # Allow s2idle/modern standby to work on Fedora 35:
-# sudo grubby --update-kernel=ALL --args='\\"acpi_osi=!Windows 2020\\"'
-# This doesn't remove it properly, not sure why: sudo grubby --update-kernel=ALL --remove-args='\\"acpi_osi=!Windows 2020\\"'
+# sudo grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'
+# To remove: sudo grubby --update-kernel=ALL --remove-args='"acpi_osi=!Windows 2020"'
+# If grubby reports that it cant find the command, just delete from /etc/default/grub and it should be removed
     - name: Set kernel flags to remove change that broke s2idle
       become: yes
-      command: grubby --update-kernel=ALL --args='\\"acpi_osi=!Windows 2020\\"'
+      command: grubby --update-kernel=ALL --args='"acpi_osi=!Windows 2020"'
 # These grubby commands will edit /etc/default/grub.
+# Check current cmdline args with: cat /proc/cmdline
 
 # Fractional Scaling
 # gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"

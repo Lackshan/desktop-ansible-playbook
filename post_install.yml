@@ -466,5 +466,11 @@
 # PHP:
 # sudo dnf install php-cli
 
-
+# Perf/System Monitoring:
 # sudo dnf install htop
+
+# Vitals
+# sudo dnf install libgtop2-devel lm_sensors
+# Turn on switch at https://extensions.gnome.org/extension/1460/vitals/
+# Could maybe automate with https://codereview.stackexchange.com/questions/243133/installing-gnome-extension-via-cli ?
+

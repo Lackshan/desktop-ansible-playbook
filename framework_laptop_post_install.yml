@@ -1,4 +1,5 @@
 # This is meant to set up additional software for Framework laptops running Fedora 35
+# TLP installation guide: https://linrunner.de/tlp/installation/fedora.html
 
 - hosts: localhost
   tasks:
@@ -26,7 +27,17 @@
         name: tlp.service
         enabled: yes
 # sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
-# Figure out how to automate above
+# Test that these actually work!!
+    # - name: Stop service systemd-rfkill.service and ensure it is masked
+    #   ansible.builtin.systemd:
+    #     name: systemd-rfkill.service
+    #     state: stopped
+    #     masked: yes
+    # - name: Stop service systemd-rfkill.socket and ensure it is masked
+    #   ansible.builtin.systemd:
+    #     name: systemd-rfkill.socket
+    #     state: stopped
+    #     masked: yes
 # sudo tlp start
     - name: Manually start TLP
       become: yes
@@ -40,20 +51,22 @@
       command: grubby --update-kernel=ALL --args=nvme.noacpi=1
 
 # Allow s2idle/modern standby to work on Fedora 35:
-# THIS IS WRONG! as having "" breaks the file. FIX IT!
-# Can be undone with sudo grubby --update-kernel=ALL --remove-args='"acpi_osi=!Windows 2020"'
-# sudo grubby --update-kernel=ALL --args='acpi_osi=!Windows 2020'
-    # - name: Set kernel flags to remove change that broke s2idle
-    #   become: yes
-    #   command: grubby --update-kernel=ALL --args='acpi_osi=!Windows 2020'
-
-# For battery thresholds with TLP: https://old.reddit.com/r/thinkpad/comments/og5anr/til_battery_charging_thresholds_best_practices/
-
+# sudo grubby --update-kernel=ALL --args='\\"acpi_osi=!Windows 2020\\"'
+# This doesn't remove it properly, not sure why: sudo grubby --update-kernel=ALL --remove-args='\\"acpi_osi=!Windows 2020\\"'
+    - name: Set kernel flags to remove change that broke s2idle
+      become: yes
+      command: grubby --update-kernel=ALL --args='\\"acpi_osi=!Windows 2020\\"'
+# These grubby commands will edit /etc/default/grub.
 
 # Fractional Scaling
 # gsettings set org.gnome.mutter experimental-features "['scale-monitor-framebuffer']"
 # Turn off with gsettings reset org.gnome.mutter experimental-features
 # This makes VSCodium look blurry
+# VSCodium Fix:
+# Edit /usr/share/applications/codium.desktop
+# Add '--enable-features=UseOzonePlatform --ozone-platform=wayland' after codium and before the existing args
+
+
 
 # Audio Jack Mic-In
 # Create file '/etc/modprobe.d/alsa-base.conf'
@@ -64,7 +77,6 @@
         dest: /etc/modprobe.d/alsa-base.conf
         content: options snd-hda-intel model=dell-headset-multi
 # Reboot for changes to take effect!
-
 
 # Tiger Lake iGPU Hardware Acceleration:
 # intel-media-driver is needed for Tiger Lake and newer

@@ -1,0 +1,23 @@
+# Playbook for setting up KVM virtualisation on Fedora
+
+- hosts: localhost
+  tasks:
+    - name: Output KVM Install start
+      ansible.builtin.debug:
+        msg:
+        - "Beginning install of @virtualization package group"
+# KVM Virtualisation
+# sudo dnf group install --with-optional virtualization
+# sudo systemctl start libvirtd
+# sudo systemctl enable libvirtd
+    - name: Install the 'Virtualization' package group
+      dnf:
+        name: '@virtualization'
+        state: present
+
+    - name: Start & Enable libvirtd service
+      ansible.builtin.systemd:
+        name: libvirtd
+        enabled: yes
+        state: started
+

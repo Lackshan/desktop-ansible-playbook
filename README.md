@@ -9,6 +9,7 @@ As I'm new to Ansible, I'm going to be installing the libraries into the ```libr
 ```bash
 sudo dnf install ansible
 ansible-galaxy collection install community.general
+ansible-galaxy install alzadude.firefox
 wget https://github.com/Lackshan/desktop-ansible-playbook/archive/refs/heads/master.zip
 ```
 

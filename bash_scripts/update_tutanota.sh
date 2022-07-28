@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# This script must be run as root
+# This script must be run as root:
+# cd ~/Projects/desktop-ansible-playbook/bash_scripts
+# sudo ./update_tutanota.sh
+
 # Any lines starting with 'sudo -u USERNAME' will be run by USERNAME
 # Other lines will be run as root
 

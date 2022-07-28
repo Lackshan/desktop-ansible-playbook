@@ -13,8 +13,11 @@ cp ~/.p10k.zsh ~/Projects/dotfiles/zsh/.p10k.zsh
 
 # Kitty:
 mkdir ~/Projects/dotfiles/kitty
+mkdir ~/Projects/dotfiles/kitty/sessions
 cp ~/.config/kitty/kitty.conf ~/Projects/dotfiles/kitty/kitty.conf
 cp ~/.config/kitty/current-theme.conf ~/Projects/dotfiles/kitty/current-theme.conf
+cp ~/.config/kitty/start_session.py ~/Projects/dotfiles/kitty/start_session.py
+cp -a ~/.config/kitty/sessions/ ~/Projects/dotfiles/kitty/sessions/
 
 # TLP:
 # Only do if TLP is installed!

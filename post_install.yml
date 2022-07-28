@@ -121,6 +121,13 @@
 # Kitty:
 # Run dl_dotfiles.sh
 
+# Kitty Sessions
+# curl https://raw.githubusercontent.com/muchzill4/kitty-session/master/start_session.py > ~/.config/kitty/start_session.py
+# Don't do the above. Instead, copy from dotfiles for kitty.
+# mkdir ~/.config/kitty/sessions
+# dl sesions maybe using dl_dotfiles.sh
+# Make sure kitty.conf has: map ctrl+k kitten start_session.py "~/.config/kitty/sessions"
+
 # Fonts
     - name: Install fontawesome fonts
       become: yes
@@ -247,6 +254,11 @@
       package:
         name: gimp
         state: present
+    - name: Install Darktable
+      become: yes
+      package:
+        name: darktable
+        state: present
     - name: Install Steam
       become: yes
       package:
@@ -294,6 +306,11 @@
     - name: Install Spotify flatpak
       community.general.flatpak:
         name: com.spotify.Client
+        state: present
+    # OBS
+    - name: Install OBS flatpak
+      community.general.flatpak:
+        name: com.obsproject.Studio
         state: present
 
 # LaTeX
@@ -391,16 +408,6 @@
 # Install Evolution: sudo dnf install evolution
 # Install evolution etesync module
 
-# KVM Virtualisation
-# sudo dnf group install --with-optional virtualization
-# sudo systemctl start libvirtd
-# sudo systemctl enable libvirtd
-    - name: Install the 'Virtualization' package group
-      dnf:
-        name: '@virtualization'
-        state: present
-
-
 # Neovim
     - name: Install Neovim
       become: yes
@@ -474,3 +481,23 @@
 # Turn on switch at https://extensions.gnome.org/extension/1460/vitals/
 # Could maybe automate with https://codereview.stackexchange.com/questions/243133/installing-gnome-extension-via-cli ?
 
+# sudo dnf install wireless-tools
+# For iwconfig
+
+# PyCharm:
+# wget -P /tmp "https://download.jetbrains.com/python/pycharm-professional-2022.1.3.tar.gz"
+# wget -P /tmp "https://download.jetbrains.com/python/pycharm-professional-2022.1.3.tar.gz.sha256"
+
+# Compare sha256sum and only proceed if it matches:
+# cd /tmp
+# sha256sum -c /tmp/pycharm-professional-2022.1.3.tar.gz.sha256
+# Output must be 'pycharm-professional-2022.1.3.tar.gz: OK'
+
+# Move to opt
+# sudo tar -xzf /tmp/pycharm-professional-2022.1.3.tar.gz -C /opt
+# This command may silently take a while if the file is large
+
+# Make file executable
+# sudo chmod +x /opt/pycharm-2022.1.3/bin/pycharm.sh
+
+# Make new playbook for firefox using the firefox ansible module

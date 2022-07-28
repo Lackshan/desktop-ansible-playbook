@@ -72,16 +72,23 @@
 # Edit /usr/share/applications/codium.desktop
 # Add '--enable-features=UseOzonePlatform --ozone-platform=wayland' after codium and before the existing args
 
+# HiDPI
+# Just make tweaks set font scale factor to 0.9
+# gsettings set org.gnome.desktop.interface text-scaling-factor 0.9
 
 
 # Audio Jack Mic-In
 # Create file '/etc/modprobe.d/alsa-base.conf'
 # Add 'options snd-hda-intel model=dell-headset-multi' to it
-    - name: Create ALSA config file to enable Mic-In via headphone jack
-      become: yes
-      copy:
-        dest: /etc/modprobe.d/alsa-base.conf
-        content: options snd-hda-intel model=dell-headset-multi
+# Only needed for realtek codec mainboard
+# Will mess up Tempo boards
+# Maybe make a way to check?
+# https://community.frame.work/t/ubuntu-21-10-tiger-lake-sound/11908/12
+    # - name: Create ALSA config file to enable Mic-In via headphone jack
+    #   become: yes
+    #   copy:
+    #     dest: /etc/modprobe.d/alsa-base.conf
+    #     content: options snd-hda-intel model=dell-headset-multi
 # Reboot for changes to take effect!
 
 # Tiger Lake iGPU Hardware Acceleration:
@@ -108,6 +115,15 @@
       package:
         name: ffmpeg
         state: present
+
+# Firefox config:
+# Could use https://ncona.com/2019/10/how-to-configure-firefox-programmatically/
+# But we'll use an Ansible module here
+  vars:
+    firefox:
+      prefs:
+        - name: media.ffmpeg.vaapi.enabled
+          value: true
 
 # If you have the Tempo audio codec Framework mainboard, you need to disable it to achieve PC10 residency:
 # sudo su

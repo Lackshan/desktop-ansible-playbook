@@ -15,17 +15,22 @@ rpm_filename=$(sudo -u lackshan find /tmp -maxdepth 1 -name 'MullvadVPN-*_x86_64
 sudo -u lackshan wget -P /tmp --trust-server-names https://mullvad.net/download/app/rpm/latest/signature
 sig_filename=$(sudo -u lackshan find /tmp -maxdepth 1 -name 'MullvadVPN-*_x86_64.rpm.asc')
 
+verify_signature() {
+    local file=$1 out=
+    # --status-fd 1 makes gpg print machine readable output
+    if out=$(sudo -u lackshan gpg --status-fd 1 --verify "$file" 2>/dev/null) &&
+       echo "$out" | grep -qs "^\[GNUPG:\] VALIDSIG "; then
+        return 0
+    else
+        echo "$out" >&2
+        return 1
+    fi
+}
+
 # Verify signature
-sudo -u lackshan gpg --verify $sig_filename
-
-# https://mullvad.net/en/help/verifying-signatures/
-# Check that the output starts with
-
-# assuming signed data in '{Filename of installer you want to verify}'
-
-# and ends with
-
-# Good signature from "Mullvad (code signing) <admin@mullvad.net>".
-
-# Install RPM
-# dnf install -y $rpm_filename
+if verify_signature $sig_filename; then
+    # Install/Update Mullvad
+    dnf install -y $rpm_filename
+else
+    echo "Invalid GPG signature. Aborting install!"
+fi

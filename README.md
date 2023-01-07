@@ -9,7 +9,6 @@ As I'm new to Ansible, I'm going to be installing the libraries into the ```libr
 ```bash
 sudo dnf install ansible
 ansible-galaxy collection install community.general
-ansible-galaxy install alzadude.firefox
 wget https://github.com/Lackshan/desktop-ansible-playbook/archive/refs/heads/master.zip
 ```
 
@@ -26,6 +25,8 @@ cd ~/Projects/desktop-ansible-playbook
 ansible-playbook post_install.yml --ask-become-pass
 source /etc/profile
 ```
+## Known Issues
+Sometimes, when running the playbook, it fails with "timeout waiting for privilege escalation password prompt". This can be fixed by adding your hostname (Run ```hostname``` in your terminal to find out what it is) to /etc/hosts for both the ```127.0.0.1``` and ```::1``` entries.
 
 ## Not included in this playbook
 1. Actual creation of SSH Keys
